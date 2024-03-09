@@ -11,6 +11,7 @@ redis/
 # IDE/Editor
 .vscode/
 .idea/
+.DS_Store
 
 # Logs
 logs/
@@ -34,3 +35,4 @@ out/
 
 # TODO
 TODO.md
+
