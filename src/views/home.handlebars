@@ -12,6 +12,7 @@
   </head>
   <body class="bg-body p-4 md:max-h-screen h-screen">
     <form class="w-full flex bg-base h-full" hx-swap="beforeend">
+      <input type="hidden" name="sessionId" value="{{sessionId}}" />
       <div class="w-full flex flex-col">
         <div
           class="flex flex-col pt-4 justify-between h-[70%] border-[1px] border-zinc-700 border-b-0"
@@ -74,7 +75,7 @@
           ></textarea>
           <button
             class="bg-blue-500 hover:bg-blue-600 text-sm font-medium text-white transition-colors p-2"
-            hx-post="/submit"
+            hx-post="/chat"
             hx-target="#chat-target"
           >
             Send
