@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { aiService } from "../services";
+import { aiService, markedService } from "../services";
 
 const handleRequest = async (req: Request, res: Response) => {
   const message = req.body.message;
@@ -15,12 +15,22 @@ const handleRequest = async (req: Request, res: Response) => {
     return;
   }
 
-  const aiMessage = await aiService.generateResponse(context, message);
+  const { content } = await aiService.generateResponse(context, message);
 
-  res.header({ "Context-Type": "text/html" }).render("components/chat", {
+  if (!content) {
+    res.render("components/error", {
+      layout: false,
+      message: "Error: Failed to generate response",
+    });
+    return;
+  }
+
+  const htmlContent = markedService.marked(content);
+
+  res.header({ "Content-Type": "text/html" }).render("components/chat", {
     layout: false,
     userMessage: message,
-    aiMessage: aiMessage.content,
+    aiMessage: htmlContent,
   });
 };
 
