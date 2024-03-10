@@ -1,4 +1,5 @@
-import * as aiService from "./aiService";
-import * as markedService from "./markedService";
+import * as aiService from "./ai-service";
+import * as markedService from "./marked-service";
+import * as redisService from "./redis-service";
 
-export { aiService, markedService };
+export { aiService, markedService, redisService };

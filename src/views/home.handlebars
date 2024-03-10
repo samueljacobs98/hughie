@@ -6,13 +6,12 @@
     <script>
       tailwind.config = { theme: { extend: { colors: { color: "#85ACF0", ai:
       "#C7B592", user: "#BEC7E3", error: "#D27A95", body: "#1E1E2E", base:
-      "#191824", }, }, }, };
+      "#191824", li: "#A6DA95", h: "#EAA27C" }, }, }, };
     </script>
     <script src="https://unpkg.com/htmx.org"></script>
   </head>
   <body class="bg-body p-4 md:max-h-screen h-screen">
     <form class="w-full flex bg-base h-full" hx-swap="beforeend">
-      <input type="hidden" name="sessionId" value="{{sessionId}}" />
       <div class="w-full flex flex-col">
         <div
           class="flex flex-col pt-4 justify-between h-[70%] border-[1px] border-zinc-700 border-b-0"
@@ -27,7 +26,7 @@
             <ul id="thoughts-target" class="list-disc p-4"></ul>
           </div>
           <button
-            hx-post="/summarise"
+            hx-post="/session/{{sessionId}}/summarise"
             hx-target="#thoughts-target"
             type="submit"
             class="bg-blue-500 hover:bg-blue-600 text-sm font-medium text-white transition-colors p-2"
@@ -75,7 +74,7 @@
           ></textarea>
           <button
             class="bg-blue-500 hover:bg-blue-600 text-sm font-medium text-white transition-colors p-2"
-            hx-post="/chat"
+            hx-post="/session/{{sessionId}}/chat"
             hx-target="#chat-target"
           >
             Send

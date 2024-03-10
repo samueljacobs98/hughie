@@ -5,18 +5,25 @@ import {
   homeController,
   summariseController,
 } from "./controllers";
+import { action } from "./utils/action";
+import { Logger } from "./utils/logger";
 
 const app = express();
 const port = 3000;
 
+const logger = Logger.new("App");
+
 middleware.addMiddleware(app);
 
-app.post("/chat", chatController.handleRequest);
+app.post("/session/:sessionId/chat", action(chatController.handleRequest));
 
-app.post("/summarise", summariseController.handleRequest);
+app.post(
+  "/session/:sessionId/summarise",
+  action(summariseController.handleRequest)
+);
 
 app.get("/", homeController.handleRequest);
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  logger.log("listen", `Server is running on port ${port}`);
 });

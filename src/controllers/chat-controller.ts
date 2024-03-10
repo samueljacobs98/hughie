@@ -1,36 +1,28 @@
 import { Request, Response } from "express";
-import { aiService, markedService } from "../services";
+import { aiService, markedService, redisService } from "../services";
+import { InvalidMessageError } from "../core/models/errors";
 
 const handleRequest = async (req: Request, res: Response) => {
-  const message = req.body.message;
-  const context = req.body.context;
-
-  console.log("body", req.body);
+  const { sessionId } = req.params;
+  const { message, context } = req.body;
 
   if (!(typeof message === "string" && message.length > 0)) {
-    res.render("components/error", {
-      layout: false,
-      message: "Error: Please provide a [valid] message",
-    });
-    return;
+    throw new InvalidMessageError("Please provide a [valid] message");
   }
 
-  const { content } = await aiService.generateResponse(context, message);
+  const content = await aiService.generateResponse(context, message);
+  const htmlContent = await markedService.marked(content);
 
-  if (!content) {
-    res.render("components/error", {
-      layout: false,
-      message: "Error: Failed to generate response",
-    });
-    return;
-  }
+  const messageExchange = {
+    userMessage: message,
+    aiMessage: htmlContent,
+  };
 
-  const htmlContent = markedService.marked(content);
+  await redisService.addMessagesToSession(sessionId, messageExchange);
 
   res.header({ "Content-Type": "text/html" }).render("components/chat", {
     layout: false,
-    userMessage: message,
-    aiMessage: htmlContent,
+    ...messageExchange,
   });
 };
 

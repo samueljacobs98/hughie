@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import * as dotenv from "dotenv";
+import { OpenAIError } from "../core/models/errors";
 
 dotenv.config();
 
@@ -12,13 +13,13 @@ type Response = OpenAI.Chat.ChatCompletionMessage;
 
 const model = "gpt-3.5-turbo";
 
-const generateResponse = async (context: string, prompt: string) => {
+const generateResponse = async (system: string, prompt: string) => {
   const params: Params = {
     model,
     messages: [
       {
         role: "system",
-        content: context,
+        content: system,
       },
       {
         role: "user",
@@ -27,9 +28,18 @@ const generateResponse = async (context: string, prompt: string) => {
     ],
   };
 
-  const response = await openai.chat.completions.create(params);
+  try {
+    const response = await openai.chat.completions.create(params);
+    const { content } = response.choices[0].message;
 
-  return response.choices[0].message;
+    if (!content) {
+      throw new Error("Failed to generate response");
+    }
+
+    return content;
+  } catch (error) {
+    throw new OpenAIError(`Error generating response (${error})`);
+  }
 };
 
 export { generateResponse };

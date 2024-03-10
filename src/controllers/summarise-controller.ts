@@ -1,26 +1,22 @@
 import { Request, Response } from "express";
+import { aiService, markedService, redisService } from "../services";
+import { InvalidMessageError, OpenAIError } from "../core/models/errors";
+import { summariseThoughtsPrompts } from "../data/prompts";
 
-const handleRequest = (req: Request, res: Response) => {
-  const message = req.body.message;
-  const context = req.body.context;
+const handleRequest = async (req: Request, res: Response) => {
+  const sessionId = req.params.sessionId;
 
-  console.log("body", req.body);
+  const messages = await redisService.getMessagesForSession(sessionId);
+  const prompt = messages.join("\n");
 
-  // if (!(typeof message === "string" && message.length > 0)) {
-  //   res.render("components/error", {
-  //     layout: false,
-  //     message: "Error: Please provide a [valid] message",
-  //   });
-  //   return;
-  // }
+  const content = await aiService.generateResponse(
+    summariseThoughtsPrompts.system,
+    prompt
+  );
 
-  // res.render("components/chat", {
-  //   layout: false,
-  //   userMessage: message,
-  //   aiMessage: "I am a bot, I don't understand your message",
-  // });
+  const htmlContent = await markedService.marked(content);
 
-  res.send(`<li>Hello World</li>`);
+  res.send(htmlContent);
 };
 
 export { handleRequest };
