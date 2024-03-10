@@ -27,15 +27,15 @@ class InvalidMessageError extends HughieError {
 }
 
 /**
- * RedisError
+ * MongoError
  * @description
- * This error is thrown when a Redis error occurs.
+ * This error is thrown when a Mongo error occurs.
  * @extends HughieError
  */
-class RedisError extends HughieError {
+class MongoError extends HughieError {
   constructor(message: string) {
-    super("Redis Error", message);
-    Object.setPrototypeOf(this, RedisError.prototype);
+    super("Mongo Error", message);
+    Object.setPrototypeOf(this, MongoError.prototype);
   }
 }
 
@@ -69,7 +69,7 @@ export {
   HughieError,
   InvalidMessageError,
   InternalServerError,
-  RedisError,
+  MongoError,
   OpenAIError,
   MarkedError,
 };

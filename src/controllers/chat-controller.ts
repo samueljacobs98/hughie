@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import { aiService, markedService, redisService } from "../services";
+import { aiService, markedService, chatMongoService } from "../services";
 import { InvalidMessageError } from "../core/models/errors";
 
 const handleRequest = async (req: Request, res: Response) => {
+  console.log("hit");
   const { sessionId } = req.params;
   const { message, context } = req.body;
 
@@ -10,19 +11,30 @@ const handleRequest = async (req: Request, res: Response) => {
     throw new InvalidMessageError("Please provide a [valid] message");
   }
 
-  const content = await aiService.generateResponse(context, message);
+  const session = { messages: undefined };
+  // const session = await chatMongoService.getSession(sessionId);
+  const sessionMessages = session?.messages || [];
+
+  const content = await aiService.generateResponse(
+    context,
+    message,
+    sessionMessages
+  );
+
   const htmlContent = await markedService.marked(content);
 
-  const messageExchange = {
-    userMessage: message,
-    aiMessage: htmlContent,
-  };
+  console.log("htmlContent", htmlContent);
 
-  await redisService.addMessagesToSession(sessionId, messageExchange);
+  // const messageExchange = await chatMongoService.addMessagesExchangeToSession(
+  //   sessionId,
+  //   message,
+  //   htmlContent
+  // );
 
   res.header({ "Content-Type": "text/html" }).render("components/chat", {
     layout: false,
-    ...messageExchange,
+    userMessage: message,
+    aiMessage: htmlContent,
   });
 };
 
