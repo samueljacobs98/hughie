@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
-import { aiService, markedService, chatMongoService } from "../services";
+import { aiService, chatMongoService } from "../services";
 import { InvalidMessageError } from "../core/models/errors";
 
 const handleRequest = async (req: Request, res: Response) => {
-  console.log("hit");
   const { sessionId } = req.params;
   const { message, context } = req.body;
 
@@ -21,20 +20,18 @@ const handleRequest = async (req: Request, res: Response) => {
     sessionMessages
   );
 
-  const htmlContent = await markedService.marked(content);
-
-  console.log("htmlContent", htmlContent);
+  console.log("content", content);
 
   // const messageExchange = await chatMongoService.addMessagesExchangeToSession(
   //   sessionId,
   //   message,
-  //   htmlContent
+  //   content
   // );
 
   res.header({ "Content-Type": "text/html" }).render("components/chat", {
     layout: false,
     userMessage: message,
-    aiMessage: htmlContent,
+    aiMessage: content,
   });
 };
 

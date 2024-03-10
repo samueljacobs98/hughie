@@ -1,0 +1,41 @@
+:root {
+  --color-main: #85acf0;
+  --color-ai: #c7b592;
+  --color-user: #bec7e3;
+  --color-error: #d27a95;
+  --color-body: #1e1e2e;
+  --color-base: #191824;
+  --color-li: #a6da95;
+  --color-h: #eaa27c;
+}
+
+li {
+  font-size: 0.875rem;
+  color: var(--color-li);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--color-h);
+}
+
+pre {
+  background-color: #2d3748;
+  padding: 1rem;
+  border-radius: 0.375rem;
+}
+
+code {
+  color: #f7fafc;
+}
+
+strong {
+  font-weight: 500;
+  font-size: 0.875rem;
+}

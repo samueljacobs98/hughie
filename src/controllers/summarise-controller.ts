@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { aiService, markedService } from "../services";
+import { aiService } from "../services";
 import { InvalidMessageError, OpenAIError } from "../core/models/errors";
 import { summariseThoughtsPrompts } from "../data/prompts";
 

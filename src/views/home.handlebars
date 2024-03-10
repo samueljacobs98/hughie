@@ -2,13 +2,16 @@
   <head>
     <title>Hughie</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://md-block.verou.me/md-block.js"></script>
     <script>
-      tailwind.config = { theme: { extend: { colors: { color: "#85ACF0", ai:
-      "#C7B592", user: "#BEC7E3", error: "#D27A95", body: "#1E1E2E", base:
-      "#191824", li: "#A6DA95", h: "#EAA27C" }, }, }, };
+      tailwind.config = { theme: { extend: { colors: { 'color':
+      'var(--color-main)', 'ai': 'var(--color-ai)', 'user': 'var(--color-user)',
+      'error': 'var(--color-error)', 'body': 'var(--color-body)', 'base':
+      'var(--color-base)', 'li': 'var(--color-li)', 'h': 'var(--color-h)' }, },
+      }, };
     </script>
     <script src="https://unpkg.com/htmx.org"></script>
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body class="bg-body p-4 md:max-h-screen h-screen">
     <form class="w-full flex bg-base h-full" hx-swap="beforeend">
