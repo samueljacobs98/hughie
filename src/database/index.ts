@@ -1,3 +1,3 @@
-import { mongoose } from "./mongoose";
+import * as db from "./mongoose";
 
-export { mongoose };
+export { db };

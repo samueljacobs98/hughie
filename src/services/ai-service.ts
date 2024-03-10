@@ -1,13 +1,9 @@
 import OpenAI from "openai";
-import * as dotenv from "dotenv";
 import { OpenAIError } from "../core/models/errors";
 import { Message, Params } from "../core/types";
+import { config } from "../config";
 
-dotenv.config();
-
-const apiKey = process.env.OPENAI_API_KEY;
-
-const openai = new OpenAI({ apiKey });
+const openai = new OpenAI({ apiKey: config.openai.apiKey });
 
 const model = "gpt-3.5-turbo";
 

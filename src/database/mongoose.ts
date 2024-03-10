@@ -1,19 +1,26 @@
 import mongoose from "mongoose";
 import { Logger } from "../utils/logger";
+import { config } from "../config";
 
 const logger = Logger.new("mongoose");
 
-const databaseURL: string = "mongodb://localhost:27017/yourDatabaseName";
+mongoose.connection.on("error", (err) => {
+  console.error("Mongoose connection error: ", err);
+  logger.error("Mongoose connection", err);
+});
+
+mongoose.connection.once("open", () => {
+  console.log("MongoDB connection established.");
+  logger.log("connect", "MongoDB connected...");
+});
 
 const connect = async () => {
   try {
-    await mongoose.connect(databaseURL);
-    logger.log("connect", "MongoDB connected...");
+    await mongoose.connect(config.mongo.uri);
   } catch (error) {
+    console.error("Failed to connect to MongoDB", error);
     logger.error("connect", error);
   }
 };
 
-connect();
-
-export { mongoose };
+export { connect };

@@ -10,28 +10,25 @@ const handleRequest = async (req: Request, res: Response) => {
     throw new InvalidMessageError("Please provide a [valid] message");
   }
 
-  const session = { messages: undefined };
-  // const session = await chatMongoService.getSession(sessionId);
-  const sessionMessages = session?.messages || [];
+  const session = await chatMongoService.getSession(sessionId);
+  const sessionMessages = session.messages;
 
-  const content = await aiService.generateResponse(
+  const aiMessage = await aiService.generateResponse(
     context,
     message,
     sessionMessages
   );
 
-  console.log("content", content);
-
-  // const messageExchange = await chatMongoService.addMessagesExchangeToSession(
-  //   sessionId,
-  //   message,
-  //   content
-  // );
+  await chatMongoService.addMessagesExchangeToSession(
+    session,
+    message,
+    aiMessage
+  );
 
   res.header({ "Content-Type": "text/html" }).render("components/chat", {
     layout: false,
     userMessage: message,
-    aiMessage: content,
+    aiMessage: aiMessage,
   });
 };
 

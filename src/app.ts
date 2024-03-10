@@ -7,6 +7,9 @@ import {
 } from "./controllers";
 import { action } from "./utils/action";
 import { Logger } from "./utils/logger";
+import { db } from "./database";
+
+db.connect();
 
 const app = express();
 const port = 3000;

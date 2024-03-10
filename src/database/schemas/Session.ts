@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document } from "mongoose";
-import OpenAI from "openai";
 import { Message } from "../../core/types";
 
 interface ISession extends Document {
