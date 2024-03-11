@@ -12,7 +12,7 @@ const handleRequest = async (req: Request, res: Response) => {
   }
 
   const session = await chatMongoService.getSession(sessionId);
-  const sessionMessages = session.messages.map(
+  const sessionMessages: Message[] = session.messages.map(
     (message) =>
       ({
         role: message.role,
