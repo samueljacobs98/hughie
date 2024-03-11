@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { aiService, chatMongoService } from "../services";
 import { InvalidMessageError } from "../core/models/errors";
+import { Message } from "../core/types";
 
 const handleRequest = async (req: Request, res: Response) => {
   const { sessionId } = req.params;
@@ -11,7 +12,13 @@ const handleRequest = async (req: Request, res: Response) => {
   }
 
   const session = await chatMongoService.getSession(sessionId);
-  const sessionMessages = session.messages;
+  const sessionMessages = session.messages.map(
+    (message) =>
+      ({
+        role: message.role,
+        content: message.content,
+      } as Message)
+  );
 
   const aiMessage = await aiService.generateResponse(
     context,
