@@ -6,6 +6,7 @@ interface ISession extends Document {
   userId?: string;
   context: string;
   messages: Message[];
+  summary?: string;
 }
 
 const SessionSchema: Schema = new Schema({
@@ -18,6 +19,7 @@ const SessionSchema: Schema = new Schema({
       content: { type: String, required: true },
     },
   ],
+  summary: { type: String, required: false },
 });
 
 const Session = mongoose.model<ISession>("Session", SessionSchema);

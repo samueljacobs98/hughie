@@ -1,23 +1,37 @@
 import { Request, Response } from "express";
-import { aiService } from "../services";
-import { InvalidMessageError, OpenAIError } from "../core/models/errors";
-import { summariseThoughtsPrompts } from "../data/prompts";
+import { aiService, chatMongoService } from "../services";
+import { summariseThoughtsPrompts as prompts } from "../data/prompts";
+import { summariseValidator } from "./validators/summarise-validator";
+import { Message } from "../core/types";
 
 const handleRequest = async (req: Request, res: Response) => {
-  const sessionId = req.params.sessionId;
+  const {
+    params: { sessionId },
+  } = summariseValidator(req);
 
-  // const messages = await redisService.getMessagesForSession(sessionId);
-  // const prompt = messages.join("\n");
+  const session = await chatMongoService.getSession(sessionId);
+  const sessionMessages: Message[] = session.messages
+    .filter((message) => message.role !== "system")
+    .map(
+      (message) =>
+        ({
+          role: message.role,
+          content: message.content,
+        } as Message)
+    );
 
-  // const content = await aiService.generateResponse(
-  //   summariseThoughtsPrompts.system,
-  //   prompt
-  // );
+  const aiResponse = await aiService.generateResponse(
+    prompts.system,
+    "",
+    sessionMessages
+  );
 
-  // const htmlContent = await markedService.marked(content);
+  await chatMongoService.updateSummary(aiResponse, session);
 
-  // res.send(htmlContent);
-  res.send("htmlContent");
+  res.header({ "Content-Type": "text/html" }).render("components/chat", {
+    layout: false,
+    aiMessage: aiResponse,
+  });
 };
 
 export { handleRequest };
