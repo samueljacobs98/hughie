@@ -14,6 +14,19 @@ class InternalServerError extends HughieError {
 }
 
 /**
+ * BadRequestError
+ * @description
+ * This error is thrown when a bad request error occurs.
+ * @extends HughieError
+ */
+class BadRequestError extends HughieError {
+  constructor(message: string) {
+    super("Bad Request Error", message);
+    Object.setPrototypeOf(this, BadRequestError.prototype);
+  }
+}
+
+/**
  * InvalidMessageError
  * @description
  * This error is thrown when an invalid message is provided.
@@ -67,6 +80,7 @@ class MarkedError extends HughieError {
 
 export {
   HughieError,
+  BadRequestError,
   InvalidMessageError,
   InternalServerError,
   MongoError,

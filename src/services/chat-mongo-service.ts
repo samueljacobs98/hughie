@@ -99,9 +99,28 @@ const addMessagesExchangeToSession = async (
   }
 };
 
+const updateSummary = async (summary: string, session: ISession) => {
+  logger.log(
+    "updateSummary",
+    `Updating summary for session with sessionId ${session.sessionId}`
+  );
+
+  try {
+    session.summary = summary;
+
+    await session.save();
+
+    return session;
+  } catch (error) {
+    logger.error("updateSummary", error);
+    throw new MongoError(`Error updating summary (${error})`);
+  }
+};
+
 export {
   createSession,
   getSession,
   updateSessionMessages,
   addMessagesExchangeToSession,
+  updateSummary,
 };
