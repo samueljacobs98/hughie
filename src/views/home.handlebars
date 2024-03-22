@@ -7,8 +7,8 @@
       tailwind.config = { theme: { extend: { colors: { 'color':
       'var(--color-main)', 'ai': 'var(--color-ai)', 'user': 'var(--color-user)',
       'error': 'var(--color-error)', 'body': 'var(--color-body)', 'base':
-      'var(--color-base)', 'li': 'var(--color-li)', 'h': 'var(--color-h)' }, },
-      }, };
+      'var(--color-base)', 'li': 'var(--color-li)', 'h': 'var(--color-h)',
+      'secondary': 'var(--color-secondary)' }, }, }, };
     </script>
     <script src="https://unpkg.com/htmx.org"></script>
     <link rel="stylesheet" href="/styles.css" />
@@ -17,70 +17,37 @@
     <form class="w-full flex bg-base h-full" hx-swap="beforeend">
       <div class="w-full flex flex-col">
         <div
-          class="flex flex-col pt-4 justify-between h-[70%] border-[1px] border-zinc-700 border-b-0"
+          class="flex flex-col justify-between h-full border-[1px] border-zinc-700 border-b-0"
         >
-          <h2 class="block mb-2 text-sm text-center font-medium text-color">
-            Thoughts
+          <h2 class="block text-sm text-center font-medium text-color">
+            <pre class="rounded-none bg-secondary">
+              {{banner}}
+            </pre>
           </h2>
           <div
-            class="flex-grow flex flex-col gap-3 overflow-auto p-3 border-[1px] border-zinc-700 overflow-y-auto"
+            class="flex-grow flex flex-col gap-4 items-center overflow-auto p-3 border-[1px] border-zinc-700 overflow-y-auto h-full"
           >
             <!-- Response goes here -->
-            <ul id="thoughts-target" class="list-disc p-4"></ul>
+            <ul id="suitable-agents-target" class="list-disc p-4"></ul>
           </div>
+          <label
+            for="description"
+            class="block m-2 text-sm font-medium text-color text-center"
+          >Agent Search</label>
+          <textarea
+            id="description"
+            name="description"
+            rows="4"
+            class="block grow p-2 w-full text-sm text-color bg-base border border-zinc-700 focus:ring-blue-500 focus:border-blue-500 h-[200px] min-h-[200px]"
+            placeholder="Describe the AI you're looking for..."
+          ></textarea>
           <button
-            hx-post="/session/{{sessionId}}/summarise"
-            hx-target="#thoughts-target"
+            hx-post="/ai/agent"
+            hx-target="#suitable-agents-target"
             type="submit"
             class="bg-blue-500 hover:bg-blue-600 text-sm font-medium text-white transition-colors p-2"
           >
-            Summarize Thoughts
-          </button>
-        </div>
-        <div
-          class="flex flex-col gap-1 h-[30%] border-[1px] border-zinc-700 pt-4"
-        >
-          <label
-            for="context"
-            class="block mb-2 text-sm font-medium text-color text-center"
-          >Context Provider</label>
-          <textarea
-            id="context"
-            name="context"
-            rows="4"
-            class="block grow p-2 w-full text-sm text-color bg-base border border-zinc-700 focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Contextualise your AI..."
-          ></textarea>
-        </div>
-        <div class="text-slate-600 text-center text-sm">{{session}}</div>
-      </div>
-      <div
-        class="w-full flex flex-col border-[1px] border-zinc-700 pt-4 border-l-0"
-      >
-        <h2 class="block mb-2 text-sm font-medium text-center text-color">
-          Chat here
-        </h2>
-        <div
-          id="chat-target"
-          class="flex-grow flex flex-col gap-3 overflow-auto p-3 border-[1px] border-zinc-700"
-          name="chatTarget"
-        >
-          <!-- Response goes here -->
-        </div>
-        <div class="flex flex-col m-0">
-          <textarea
-            id="userMessage"
-            name="message"
-            rows="3"
-            class="block grow p-2 w-full text-sm text-color bg-base border border-zinc-700 focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Type your message here..."
-          ></textarea>
-          <button
-            class="bg-blue-500 hover:bg-blue-600 text-sm font-medium text-white transition-colors p-2"
-            hx-post="/session/{{sessionId}}/chat"
-            hx-target="#chat-target"
-          >
-            Send
+            Find your AI...
           </button>
         </div>
       </div>

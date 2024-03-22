@@ -2,8 +2,9 @@ import { Request } from "express";
 import { validate } from "./validate";
 import { summariseSchema } from "./schemas";
 import { BadRequestError } from "../../core/models/errors";
+import { SummariseRequestData } from "../../core/types";
 
-const summariseValidator = (req: Request) => {
+const validateRequest = (req: Request): SummariseRequestData => {
   return validate(
     req,
     summariseSchema,
@@ -11,4 +12,4 @@ const summariseValidator = (req: Request) => {
   );
 };
 
-export { summariseValidator };
+export { validateRequest };

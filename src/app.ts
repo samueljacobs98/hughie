@@ -2,6 +2,8 @@ import express from "express";
 import * as middleware from "./middleware";
 import {
   chatController,
+  getChatController,
+  getSuitableAgentsController,
   homeController,
   summariseController,
 } from "./controllers";
@@ -18,12 +20,19 @@ const logger = Logger.new("App");
 
 middleware.addMiddleware(app);
 
-app.post("/session/:sessionId/chat", action(chatController.handleRequest));
-
 app.post(
   "/session/:sessionId/summarise",
   action(summariseController.handleRequest)
 );
+
+app.post(
+  "/ai/agent/:agentId/session/:sessionId",
+  action(chatController.handleRequest)
+);
+
+app.get("/ai/agent/:agentId/chat", getChatController.handleRequest);
+
+app.post("/ai/agent", action(getSuitableAgentsController.handleRequest));
 
 app.get("/", homeController.handleRequest);
 

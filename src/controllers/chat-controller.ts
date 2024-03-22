@@ -1,39 +1,16 @@
 import { Request, Response } from "express";
-import { aiService, chatMongoService } from "../services";
-import { InvalidMessageError } from "../core/models/errors";
-import { Message } from "../core/types";
-import { chatValidator } from "./validators";
+import { chatService as service } from "../services";
+import { chatValidator as validator } from "./validators";
+import { ChatRequestData as RequestData } from "../core/types";
 
 const handleRequest = async (req: Request, res: Response) => {
-  const { params, body } = chatValidator(req);
+  const requestData: RequestData = validator.validateRequest(req);
 
-  const { sessionId } = params;
-  const { message, context } = body;
-
-  const session = await chatMongoService.getSession(sessionId);
-  const sessionMessages: Message[] = session.messages.map(
-    (message) =>
-      ({
-        role: message.role,
-        content: message.content,
-      } as Message)
-  );
-
-  const aiResponse = await aiService.generateResponse(
-    context,
-    message,
-    sessionMessages
-  );
-
-  await chatMongoService.addMessagesExchangeToSession(
-    session,
-    message,
-    aiResponse
-  );
+  const { aiResponse } = await service.serve({ ...requestData });
 
   res.header({ "Content-Type": "text/html" }).render("components/chat", {
     layout: false,
-    userMessage: message,
+    userMessage: requestData.body.message,
     aiMessage: aiResponse,
   });
 };

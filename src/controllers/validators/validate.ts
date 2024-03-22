@@ -9,7 +9,8 @@ const validate = <T>(
 ) => {
   const validationResult = schema.safeParse(req);
   if (!validationResult.success) {
-    throw error ? error : new BadRequestError("Invalid request data");
+    console.log(validationResult.error.errors);
+    throw error || new BadRequestError("Invalid request data");
   }
 
   return validationResult.data;

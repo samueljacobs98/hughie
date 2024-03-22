@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import { OpenAIError } from "../core/models/errors";
-import { Message, Params } from "../core/types";
+import { OpenAIMessage, OpenAIParams } from "../core/types";
 import { config } from "../config";
 
 const openai = new OpenAI({ apiKey: config.openai.apiKey });
@@ -10,9 +10,9 @@ const model = "gpt-3.5-turbo";
 const generateResponse = async (
   system: string,
   prompt: string,
-  messages: Message[]
+  messages: OpenAIMessage[]
 ) => {
-  const params: Params = {
+  const params: OpenAIParams = {
     model,
     messages: [
       {
