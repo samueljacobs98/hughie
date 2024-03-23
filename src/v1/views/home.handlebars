@@ -1,0 +1,44 @@
+<form class="w-full flex bg-base h-full" hx-swap="beforeend">
+  <div class="w-full flex flex-col">
+    <div
+      class="flex flex-col justify-between h-full border-[1px] border-zinc-700 border-b-0"
+    >
+      <h2 class="block text-sm text-center font-medium text-color">
+        <pre class="rounded-none bg-secondary">
+          {{banner}}
+        </pre>
+      </h2>
+      <div
+        class="flex-grow flex flex-col gap-4 items-center overflow-auto p-3 border-[1px] border-zinc-700 overflow-y-auto h-full"
+      >
+        <!-- Response goes here -->
+        <ul id="suitable-agents-target" class="list-disc p-4"></ul>
+      </div>
+      <label
+        for="description"
+        class="block m-2 text-sm font-medium text-color text-center"
+      >Agent Search</label>
+      <textarea
+        id="description"
+        name="description"
+        rows="4"
+        class="block grow p-2 w-full text-sm text-color bg-base border border-zinc-700 focus:ring-blue-500 focus:border-blue-500 h-[200px] min-h-[200px]"
+        placeholder="Describe the AI you're looking for..."
+      ></textarea>
+      <button
+        hx-post="/v1/ai/agent"
+        hx-target="#suitable-agents-target"
+        type="submit"
+        class="bg-blue-500 hover:bg-blue-600 text-sm font-medium text-white transition-colors p-2"
+      >
+        Find your AI...
+      </button>
+      <a
+        href="/ai/agent/create"
+        class="bg-blue-500 hover:bg-blue-600 text-sm text-center bg-secondary font-medium text-white transition-colors p-2"
+      >
+        Create new AI
+      </a>
+    </div>
+  </div>
+</form>
