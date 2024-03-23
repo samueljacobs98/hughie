@@ -1,17 +1,8 @@
 import express from "express";
-import * as middleware from "./middleware";
-import {
-  chatController,
-  createAgentController,
-  getChatController,
-  getCreateAgentController,
-  getSuitableAgentsController,
-  homeController,
-  summariseController,
-} from "./controllers";
-import { action } from "./utils/action";
-import { Logger } from "./utils/logger";
-import { mongodb } from "./database";
+import * as middleware from "./api/middleware";
+import { Logger } from "./api/utils/logger";
+import { mongodb } from "./api/database";
+import { v1Router } from "./routes";
 
 mongodb.connect();
 
@@ -22,26 +13,15 @@ const logger = Logger.new("App");
 
 middleware.addMiddleware(app);
 
-app.post(
-  "/session/:sessionId/summarise",
-  action(summariseController.handleRequest)
-);
-
-app.get("/ai/agent/create", getCreateAgentController.handleRequest);
-
-app.post("/ai/agent/create", createAgentController.handleRequest);
-
-app.post(
-  "/ai/agent/:agentId/session/:sessionId",
-  action(chatController.handleRequest)
-);
-
-app.get("/ai/agent/:agentId/chat", getChatController.handleRequest);
-
-app.post("/ai/agent", action(getSuitableAgentsController.handleRequest));
-
-app.get("/", homeController.handleRequest);
+app.use("/v1", v1Router);
 
 app.listen(port, () => {
-  logger.log("listen", `Server is running on port ${port}`);
+  logger.log(
+    "listen",
+    `
+    
+      Server is running on port ${port}
+      Connection: http://localhost:3000/v1
+    `
+  );
 });

@@ -1,0 +1,73 @@
+<form
+  class="w-full max-w-2xl flex flex-col bg-base h-full text-color border-[1px] border-zinc-700"
+  hx-swap="beforeend"
+>
+  <div class="flex flex-col gap-1 p-2">
+    <label for="name" class="font-semibold">Name</label>
+    <p class="italic">The name your agent will be known by</p>
+    <input type="text" id="name" name="name" class="w-full" required />
+  </div>
+  <div class="flex flex-col gap-1 p-2 border-t-[1px] border-zinc-700">
+    <label for="color" class="font-semibold">Color</label>
+    <p class="italic">Select a colour to associate with your agent</p>
+    <input
+      type="color"
+      id="color"
+      name="color"
+      class="cursor-pointer"
+      required
+    />
+  </div>
+  <div class="flex flex-col gap-1 p-2 border-t-[1px] border-zinc-700">
+    <label for="tagline" class="font-semibold">Tagline</label>
+    <p class="italic">A concise summary of your AI (maxlength: 70 characters)</p>
+    <input
+      type="text"
+      id="tagline"
+      name="tagline"
+      maxlength="70"
+      class="w-full"
+      required
+    />
+  </div>
+  <div class="flex flex-col gap-1 p-2 border-t-[1px] border-zinc-700">
+    <label for="description" class="font-semibold">Description</label>
+    <p class="italic">A clear description of your AIs functionality. Used for
+      finding an appropriate AI.</p>
+    <textarea
+      id="description"
+      name="description"
+      class="w-full"
+      required
+    ></textarea>
+  </div>
+  <div class="flex flex-col gap-1 p-2 border-t-[1px] border-zinc-700">
+    <label for="autobiography" class="font-semibold">Autobiography</label>
+    <p class="italic">A description written as if by the AI. Used to
+      contextualise the agent and set it's tone.</p>
+    <textarea
+      id="autobiography"
+      name="autobiography"
+      class="w-full"
+      required
+    ></textarea>
+  </div>
+  <div class="flex flex-col gap-1 p-2 border-t-[1px] border-zinc-700">
+    <label for="prompt" class="font-semibold">Prompt</label>
+    <p class="italic">The system prompt for the agent.</p>
+    <textarea id="prompt" name="prompt" class="w-full" required></textarea>
+  </div>
+  <button
+    hx-post="/v1/ai/agent/create"
+    hx-target="#created-agent-target"
+    type="submit"
+    class="bg-blue-500 hover:bg-blue-600 text-sm font-medium text-white transition-colors p-2"
+  >
+    Create your AI...
+  </button>
+  <div
+    id="created-agent-target"
+    class="flex flex-col items-center overflow-y-auto py-2 gap-2"
+  >
+  </div>
+</form>
