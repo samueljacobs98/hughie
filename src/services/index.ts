@@ -1,4 +1,13 @@
-import * as aiService from "./ai-service";
-import * as chatMongoService from "./chat-mongo-service";
+import * as chatService from "./chat-service";
+import * as createAgentService from "./create-agent-service";
+import * as getChatService from "./get-chat-service";
+import * as getSuitableAgentsService from "./get-suitable-agents-service";
+import * as summariseService from "./summarise-service";
 
-export { aiService, chatMongoService };
+export {
+  chatService,
+  createAgentService,
+  getChatService,
+  getSuitableAgentsService,
+  summariseService,
+};

@@ -1,14 +1,15 @@
 import { Request } from "express";
 import { validate } from "./validate";
-import { summariseSchema } from "./schemas";
 import { BadRequestError } from "../../core/models/errors";
+import { SummariseRequestData as RequestData } from "../../core/types";
+import { summariseRequestDataSchema as schema } from "./schemas";
 
-const summariseValidator = (req: Request) => {
+const validateRequest = (req: Request): RequestData => {
   return validate(
     req,
-    summariseSchema,
+    schema,
     new BadRequestError("Invalid summarise request data")
   );
 };
 
-export { summariseValidator };
+export { validateRequest };

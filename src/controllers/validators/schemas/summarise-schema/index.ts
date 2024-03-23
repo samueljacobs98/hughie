@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { paramsSchema } from "./params-schema";
 
-const summariseSchema = z.object({
+const summariseRequestDataSchema = z.object({
   params: paramsSchema,
 });
 
-export { summariseSchema };
+export { summariseRequestDataSchema };

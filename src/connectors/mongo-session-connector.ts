@@ -1,9 +1,9 @@
 import { MongoError } from "../core/models/errors";
-import { Message } from "../core/types";
+import { OpenAIMessage } from "../core/types";
 import { Session, ISession } from "../database/schemas";
 import { Logger } from "../utils/logger";
 
-const logger = Logger.new("ChatMongoService");
+const logger = Logger.new("MongoSessionConnector");
 
 const createSession = async (sessionId: string) => {
   logger.log(
@@ -45,7 +45,7 @@ const getSession = async (sessionId: string): Promise<ISession> => {
 
 const updateSessionMessages = async (
   session: ISession,
-  sessionMessages: Message[]
+  sessionMessages: OpenAIMessage[]
 ) => {
   logger.log(
     "updateSessionMessages",
@@ -77,12 +77,12 @@ const addMessagesExchangeToSession = async (
   );
 
   try {
-    const userMessage: Message = {
+    const userMessage: OpenAIMessage = {
       role: "user",
       content: prompt,
     };
 
-    const aiMessage: Message = {
+    const aiMessage: OpenAIMessage = {
       role: "assistant",
       content: response,
     };

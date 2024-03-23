@@ -1,19 +1,20 @@
 import OpenAI from "openai";
 import { OpenAIError } from "../core/models/errors";
-import { Message, Params } from "../core/types";
+import { OpenAIMessage, OpenAIParams } from "../core/types";
 import { config } from "../config";
 
 const openai = new OpenAI({ apiKey: config.openai.apiKey });
 
-const model = "gpt-3.5-turbo";
+const completionsModel = "gpt-3.5-turbo";
+const embeddingModel = "text-embedding-3-small";
 
 const generateResponse = async (
   system: string,
   prompt: string,
-  messages: Message[]
+  messages: OpenAIMessage[]
 ) => {
-  const params: Params = {
-    model,
+  const params: OpenAIParams = {
+    model: completionsModel,
     messages: [
       {
         role: "system",
@@ -41,4 +42,14 @@ const generateResponse = async (
   }
 };
 
-export { generateResponse };
+const generateEmbedding = async (prompt: string) => {
+  const embedding = await openai.embeddings.create({
+    model: embeddingModel,
+    input: prompt,
+    encoding_format: "float",
+  });
+
+  return embedding.data[0].embedding;
+};
+
+export { generateResponse, generateEmbedding };

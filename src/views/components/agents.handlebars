@@ -1,0 +1,15 @@
+{{#each agents}}
+  <form class="flex flex-col gap-1">
+    <header class="grid gap-2">
+      <a
+        href="/ai/agent/{{agentId}}/chat"
+        class="text-[{{color}}] font-bold px-4 py-2 bg-sky-950 rounded capitalize w-fit"
+      >{{name}} →</a>
+      <h3>{{tagline}}</h3>
+    </header>
+    <div class="space-y-0.5 max-w-[700px]">
+      <p class="text-color">{{description}}</p>
+      <p class="text-slate-400 italic">{{autobiography}}</p>
+    </div>
+  </form>
+{{/each}}

@@ -1,4 +1,13 @@
-import { chatSchema } from "./chat-schema";
-import { summariseSchema } from "./summarise-schema";
+import { chatRequestDataSchema } from "./chat-schema";
+import { createAgentRequestDataSchema } from "./create-agent-schema";
+import { getChatRequestDataSchema } from "./get-chat-schema";
+import { getSuitableAgentsRequestDataSchema } from "./get-suitable-agents-schema";
+import { summariseRequestDataSchema } from "./summarise-schema";
 
-export { chatSchema, summariseSchema };
+export {
+  chatRequestDataSchema,
+  createAgentRequestDataSchema,
+  getChatRequestDataSchema,
+  getSuitableAgentsRequestDataSchema,
+  summariseRequestDataSchema,
+};

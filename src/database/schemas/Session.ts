@@ -1,11 +1,11 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { Message } from "../../core/types";
+import { OpenAIMessage } from "../../core/types";
 
 interface ISession extends Document {
   sessionId: string;
   userId?: string;
   context: string;
-  messages: Message[];
+  messages: OpenAIMessage[];
   summary?: string;
 }
 
