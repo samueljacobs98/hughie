@@ -1,3 +1,3 @@
-import * as db from "./mongoose";
+import * as mongodb from "./mongoose";
 
-export { db };
+export { mongodb };

@@ -1,17 +1,17 @@
 import { Request, Response } from "express";
-import { getChatService } from "../services";
-import { getChatValidator } from "./validators";
-import { GetChatRequestData } from "../core/types";
+import { getChatValidator as validator } from "./validators";
+import { getChatService as service } from "../services";
+import { GetChatRequestData as RequestData } from "../core/types";
 
 const handleRequest = async (req: Request, res: Response) => {
-  const requestData: GetChatRequestData = getChatValidator.validateRequest(req);
+  const requestData: RequestData = validator.validateRequest(req);
 
-  const sessionId = await getChatService.serve();
+  const { sessionId, agent } = await service.serve(requestData);
 
-  res.render("chat", {
-    layout: false,
+  res.render("get-chat", {
     sessionId,
     agentId: requestData.params.agentId,
+    context: agent?.prompt || "",
   });
 };
 

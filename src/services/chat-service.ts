@@ -1,19 +1,10 @@
 import { mongoSessionConnector, openAIConnector } from "../connectors";
-import { OpenAIMessage } from "../core/types";
+import { ChatRequestData, OpenAIMessage } from "../core/types";
 
-interface ServeInput {
-  params: {
-    agentId: string;
-    sessionId: string;
-  };
-  body: {
-    context: string;
-    message: string;
-  };
-}
-
-const serve = async ({ params, body }: ServeInput) => {
-  const session = await mongoSessionConnector.getSession(params.sessionId);
+const serve = async (requestData: ChatRequestData) => {
+  const session = await mongoSessionConnector.getSession(
+    requestData.params.sessionId
+  );
   const sessionMessages: OpenAIMessage[] = session.messages.map(
     (message) =>
       ({
@@ -23,14 +14,14 @@ const serve = async ({ params, body }: ServeInput) => {
   );
 
   const aiResponse = await openAIConnector.generateResponse(
-    body.context,
-    body.message,
+    requestData.body.context,
+    requestData.body.message,
     sessionMessages
   );
 
   await mongoSessionConnector.addMessagesExchangeToSession(
     session,
-    body.message,
+    requestData.body.message,
     aiResponse
   );
 

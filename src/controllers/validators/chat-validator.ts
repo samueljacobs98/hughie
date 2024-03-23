@@ -1,13 +1,13 @@
 import { Request } from "express";
-import { chatRequestDataSchema } from "./schemas";
 import { BadRequestError } from "../../core/models/errors";
 import { validate } from "./validate";
-import { ChatRequestData } from "../../core/types";
+import { ChatRequestData as RequestData } from "../../core/types";
+import { chatRequestDataSchema as schema } from "./schemas";
 
-const validateRequest = (req: Request): ChatRequestData => {
+const validateRequest = (req: Request): RequestData => {
   return validate(
     req,
-    chatRequestDataSchema,
+    schema,
     new BadRequestError("Invalid chat request data")
   );
 };

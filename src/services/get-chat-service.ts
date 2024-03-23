@@ -1,12 +1,17 @@
 import { v4 as uuid } from "uuid";
-import { mongoSessionConnector } from "../connectors";
+import { GetChatRequestData as RequestData } from "../core/types";
+import { mongoAgentConnector, mongoSessionConnector } from "../connectors";
 
-const serve = async () => {
+const serve = async (requestData: RequestData) => {
   const sessionId = uuid();
 
   await mongoSessionConnector.createSession(sessionId);
 
-  return sessionId;
+  const agent = await mongoAgentConnector.getAgentById(
+    requestData.params.agentId
+  );
+
+  return { sessionId, agent };
 };
 
 export { serve };

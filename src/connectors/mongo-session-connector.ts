@@ -3,7 +3,7 @@ import { OpenAIMessage } from "../core/types";
 import { Session, ISession } from "../database/schemas";
 import { Logger } from "../utils/logger";
 
-const logger = Logger.new("ChatMongoService");
+const logger = Logger.new("MongoSessionConnector");
 
 const createSession = async (sessionId: string) => {
   logger.log(

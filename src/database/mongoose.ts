@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { AnyObject } from "mongoose";
 import { Logger } from "../utils/logger";
 import { config } from "../config";
 
@@ -10,7 +10,6 @@ mongoose.connection.on("error", (err) => {
 });
 
 mongoose.connection.once("open", () => {
-  console.log("MongoDB connection established.");
   logger.log("connect", "MongoDB connected...");
 });
 
@@ -18,9 +17,12 @@ const connect = async () => {
   try {
     await mongoose.connect(config.mongo.uri);
   } catch (error) {
-    console.error("Failed to connect to MongoDB", error);
-    logger.error("connect", error);
+    logger.error("connect", `"Failed to connect to MongoDB - ${error}`);
   }
 };
 
-export { connect };
+const getCollection = <T extends AnyObject>(collectionName: string) => {
+  return mongoose.connection.collection<T>(collectionName);
+};
+
+export { connect, getCollection };

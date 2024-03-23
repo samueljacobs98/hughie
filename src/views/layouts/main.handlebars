@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>Hughie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://md-block.verou.me/md-block.js"></script>
+    <script>
+      tailwind.config = { theme: { extend: { colors: { 'color':
+      'var(--color-main)', 'ai': 'var(--color-ai)', 'user': 'var(--color-user)',
+      'error': 'var(--color-error)', 'body': 'var(--color-body)', 'base':
+      'var(--color-base)', 'li': 'var(--color-li)', 'h': 'var(--color-h)',
+      'secondary': 'var(--color-secondary)' }, }, }, };
+    </script>
+    <script src="https://unpkg.com/htmx.org"></script>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="bg-body p-4 md:max-h-screen h-screen flex flex-col items-center">
+    {{{body}}}
+  </body>
+</html>

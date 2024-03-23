@@ -2,16 +2,18 @@ import express from "express";
 import * as middleware from "./middleware";
 import {
   chatController,
+  createAgentController,
   getChatController,
+  getCreateAgentController,
   getSuitableAgentsController,
   homeController,
   summariseController,
 } from "./controllers";
 import { action } from "./utils/action";
 import { Logger } from "./utils/logger";
-import { db } from "./database";
+import { mongodb } from "./database";
 
-db.connect();
+mongodb.connect();
 
 const app = express();
 const port = 3000;
@@ -24,6 +26,10 @@ app.post(
   "/session/:sessionId/summarise",
   action(summariseController.handleRequest)
 );
+
+app.get("/ai/agent/create", getCreateAgentController.handleRequest);
+
+app.post("/ai/agent/create", createAgentController.handleRequest);
 
 app.post(
   "/ai/agent/:agentId/session/:sessionId",
