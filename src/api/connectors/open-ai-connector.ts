@@ -1,7 +1,7 @@
 import OpenAI from "openai";
-import { OpenAIError } from "../../api/core/models/errors";
-import { OpenAIMessage, OpenAIParams } from "../../api/core/types";
-import { config } from "../../api/config";
+import { OpenAIError } from "../core/models/errors";
+import { OpenAIMessage, OpenAIParams } from "../core/types";
+import { config } from "../config";
 
 const openai = new OpenAI({ apiKey: config.openai.apiKey });
 

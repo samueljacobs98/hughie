@@ -1,5 +1,6 @@
+import { openAIConnector } from "../../api/connectors";
 import { OpenAIMessage } from "../../api/core/types";
-import { mongoSessionConnector, openAIConnector } from "../connectors";
+import { mongoSessionConnector } from "../connectors";
 import { ChatRequestData as RequestData } from "../core/types";
 
 const serve = async (requestData: RequestData) => {

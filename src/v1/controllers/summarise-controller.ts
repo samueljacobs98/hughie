@@ -8,7 +8,7 @@ const handleRequest = async (req: Request, res: Response) => {
 
   const aiResponse = await service.serve({ ...requestData });
 
-  res.header({ "Content-Type": "text/html" }).render("components/chat", {
+  res.header({ "Content-Type": "text/html" }).render("v1/components/chat", {
     layout: false,
     aiMessage: aiResponse,
   });

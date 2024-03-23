@@ -10,7 +10,7 @@ const handleRequest = async (req: Request, res: Response) => {
 
   res
     .header({ "Content-Type": "text/html" })
-    .render("components/agent-created", {
+    .render("v1/components/agent-created", {
       layout: false,
       agentId,
       color,

@@ -1,9 +1,10 @@
-import { mongoSessionConnector, openAIConnector } from "../connectors";
-import { SummariseRequestData } from "../core/types";
+import { mongoSessionConnector } from "../connectors";
+import { SummariseRequestData as RequestData } from "../core/types";
 import { summariseThoughtsPrompts as prompts } from "../../api/data/prompts";
 import { OpenAIMessage } from "../../api/core/types";
+import { openAIConnector } from "../../api/connectors";
 
-const serve = async (requestData: SummariseRequestData) => {
+const serve = async (requestData: RequestData) => {
   const session = await mongoSessionConnector.getSession(
     requestData.params.sessionId
   );

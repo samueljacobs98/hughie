@@ -1,9 +1,9 @@
 import { MongoError } from "../../api/core/models/errors";
 import { v4 as uuid } from "uuid";
-import { Agent, IAgent } from "../../database/schemas";
-import { Logger } from "../../utils/logger";
-import { openAIConnector } from ".";
-import { mongodb } from "../../database";
+import { Agent, IAgent } from "../../api/database/schemas";
+import { Logger } from "../../api/utils/logger";
+import { openAIConnector } from "../../api/connectors";
+import { mongodb } from "../../api/database";
 
 const logger = Logger.new("MongoAgentConnector");
 

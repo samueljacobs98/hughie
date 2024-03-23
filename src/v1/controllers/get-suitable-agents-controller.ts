@@ -8,7 +8,7 @@ const handleRequest = async (req: Request, res: Response) => {
 
   const agents = await service.serve({ ...requestData });
 
-  res.render("components/agents", {
+  res.render("v1/components/agents", {
     layout: false,
     agents,
   });

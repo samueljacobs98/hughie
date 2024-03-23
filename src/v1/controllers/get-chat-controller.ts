@@ -8,7 +8,7 @@ const handleRequest = async (req: Request, res: Response) => {
 
   const { sessionId, agent } = await service.serve(requestData);
 
-  res.render("get-chat", {
+  res.render("v1/get-chat", {
     sessionId,
     agentId: requestData.params.agentId,
     context: agent?.prompt || "",
