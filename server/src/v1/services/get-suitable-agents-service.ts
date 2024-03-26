@@ -6,6 +6,7 @@ const serve = async (requestData: GetSuitableAgentsRequestData) => {
   const queryVector = await openAIConnector.generateEmbedding(
     requestData.body.description
   );
+
   const agents = await mongoAgentConnector.findSimilarAgents(queryVector);
 
   return agents;
