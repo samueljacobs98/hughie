@@ -1,7 +1,7 @@
 import { MongoError } from "../../api/core/models/errors";
 import { OpenAIMessage } from "../../api/core/types";
 import { Session, ISession } from "../../api/database/schemas";
-import { Logger } from "../../api/utils/logger";
+import { Logger } from "../../api/utils";
 
 const logger = Logger.new("MongoSessionConnector");
 

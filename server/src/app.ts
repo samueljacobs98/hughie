@@ -1,6 +1,6 @@
 import express from "express";
 import * as middleware from "./api/middleware";
-import { Logger } from "./api/utils/logger";
+import { Logger } from "./api/utils";
 import { mongodb } from "./api/database";
 import { v1Router } from "./routes";
 

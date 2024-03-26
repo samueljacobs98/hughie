@@ -1,9 +1,9 @@
 import { MongoError } from "../../api/core/models/errors";
 import { v4 as uuid } from "uuid";
 import { Agent, IAgent } from "../../api/database/schemas";
-import { Logger } from "../../api/utils/logger";
 import { openAIConnector } from "../../api/connectors";
 import { mongodb } from "../../api/database";
+import { Logger } from "../../api/utils";
 
 const logger = Logger.new("MongoAgentConnector");
 
@@ -46,24 +46,31 @@ const createAgent = async (data: Data) => {
   return agent;
 };
 
-const findSimilarAgents = async (query: string) => {
+const findSimilarAgents = async (queryVector: number[]) => {
+  logger.log("findSimilarAgents", `Finding similar agents for query`);
+
   try {
     const agents = await collection
       .aggregate<IAgent>([
         {
-          $search: {
-            index: "embedding",
-            text: {
-              query,
-              path: {
-                wildcard: "*",
-              },
-            },
+          $vectorSearch: {
+            index: "vector_index",
+            path: "embedding",
+            queryVector: queryVector,
+            numCandidates: 150,
+            limit: 5,
           },
         },
+        {
+          $addFields: {
+            similarity: { $meta: "vectorSearchScore" },
+          },
+        },
+        { $sort: { similarity: -1 } },
+        { $match: { similarity: { $gte: 0.7 } } },
       ])
       .toArray();
-
+    console.log(agents);
     return agents;
   } catch (error) {
     console.error(error);

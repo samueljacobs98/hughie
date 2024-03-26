@@ -1,5 +1,5 @@
 import mongoose, { AnyObject } from "mongoose";
-import { Logger } from "../utils/logger";
+import { Logger } from "../utils";
 import { config } from "../config";
 
 const logger = Logger.new("mongoose");
