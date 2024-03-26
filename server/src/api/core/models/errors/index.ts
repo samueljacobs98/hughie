@@ -8,7 +8,7 @@ import { HughieError } from "./HughieError";
  */
 class InternalServerError extends HughieError {
   constructor(message: string) {
-    super("Internal Server Error", message);
+    super("Internal Server Error", message, 500);
     Object.setPrototypeOf(this, InternalServerError.prototype);
   }
 }
@@ -21,7 +21,7 @@ class InternalServerError extends HughieError {
  */
 class BadRequestError extends HughieError {
   constructor(message: string) {
-    super("Bad Request Error", message);
+    super("Bad Request Error", message, 400);
     Object.setPrototypeOf(this, BadRequestError.prototype);
   }
 }
@@ -34,7 +34,7 @@ class BadRequestError extends HughieError {
  */
 class InvalidMessageError extends HughieError {
   constructor(message: string) {
-    super("Invalid Message Error", message);
+    super("Invalid Message Error", message, 400);
     Object.setPrototypeOf(this, InvalidMessageError.prototype);
   }
 }
@@ -47,7 +47,7 @@ class InvalidMessageError extends HughieError {
  */
 class MongoError extends HughieError {
   constructor(message: string) {
-    super("Mongo Error", message);
+    super("Mongo Error", message, 500);
     Object.setPrototypeOf(this, MongoError.prototype);
   }
 }
@@ -60,7 +60,7 @@ class MongoError extends HughieError {
  */
 class OpenAIError extends HughieError {
   constructor(message: string) {
-    super("OpenAI Error", message);
+    super("OpenAI Error", message, 500);
     Object.setPrototypeOf(this, OpenAIError.prototype);
   }
 }
@@ -73,7 +73,7 @@ class OpenAIError extends HughieError {
  */
 class MarkedError extends HughieError {
   constructor(message: string) {
-    super("Marked Error", message);
+    super("Marked Error", message, 500);
     Object.setPrototypeOf(this, MarkedError.prototype);
   }
 }

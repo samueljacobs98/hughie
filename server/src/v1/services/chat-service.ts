@@ -7,6 +7,7 @@ const serve = async (requestData: RequestData) => {
   const session = await mongoSessionConnector.getSession(
     requestData.params.sessionId
   );
+
   const sessionMessages: OpenAIMessage[] = session.messages.map(
     (message) =>
       ({

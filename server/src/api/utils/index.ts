@@ -1,3 +1,4 @@
 import { action } from "./action";
+import { Logger } from "./logger";
 
-export { action };
+export { action, Logger };
